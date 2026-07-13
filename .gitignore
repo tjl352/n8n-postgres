@@ -1,0 +1,17 @@
+# Data backups (store in Dropbox / Drive, not Git)
+*.sql
+*.tar.gz
+backups/
+n8n-backups/
+
+# Local env / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
