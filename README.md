@@ -140,25 +140,32 @@ git push
 
 You cannot drag Docker volumes into Drive directly. Export them to files, then upload those files.
 
-**1. Export backups** (stack should be running). From the project folder:
+Each backup run creates a **new timestamped folder** so older copies are kept (nothing is overwritten).
+
+**1. Export backups** (stack should be running). Paste and run the **whole block** each time you want a new backup:
 
 ```bash
-mkdir -p ~/Desktop/n8n-backups
+BACKUP_DIR=~/Desktop/n8n-backups/$(date +%Y-%m-%d_%H-%M-%S)
+mkdir -p "$BACKUP_DIR"
 
 # Postgres data (workflows, users, etc.)
-docker compose exec -T postgres pg_dump -U n8n_user n8n_database > ~/Desktop/n8n-backups/n8n_postgres_backup.sql
+docker compose exec -T postgres pg_dump -U n8n_user n8n_database > "$BACKUP_DIR/n8n_postgres_backup.sql"
 
 # n8n settings volume (encryption key, etc.)
 docker run --rm \
   -v n8n-postrgres_n8n_data:/data \
-  -v ~/Desktop/n8n-backups:/backup \
+  -v "$BACKUP_DIR":/backup \
   alpine tar czf /backup/n8n_data_backup.tar.gz -C /data .
 ```
 
-You should get:
+You should get a folder like:
 
-- `~/Desktop/n8n-backups/n8n_postgres_backup.sql`
-- `~/Desktop/n8n-backups/n8n_data_backup.tar.gz`
+`~/Desktop/n8n-backups/2026-07-13_19-49-02/`
+
+containing:
+
+- `n8n_postgres_backup.sql`
+- `n8n_data_backup.tar.gz`
 
 Confirm volume names if needed:
 
@@ -174,7 +181,7 @@ On this project they are typically:
 **2. Upload manually**
 
 1. Open Finder → **Desktop** → **n8n-backups**
-2. Drag the folder (or the two files) into **Google Drive** or **Dropbox**
+2. Drag the latest dated folder into **Google Drive** or **Dropbox**
 3. Wait until upload finishes
 
-Re-run the export commands after important workflow changes, then replace the files in Drive/Dropbox.
+Optional: delete old dated folders locally or in Drive when you no longer need them.
