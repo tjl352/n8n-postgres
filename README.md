@@ -57,11 +57,11 @@ docker compose exec -T postgres psql -U n8n_user -d n8n_database < ./backups/n8n
 # Check the n8n volume name on this machine
 docker volume ls | grep n8n
 
-# Restore n8n settings volume (replace YOUR_PROJECT_n8n_data with the name from above)
+# Restore n8n settings volume
 docker run --rm \
-  -v YOUR_PROJECT_n8n_data:/data \
+  -v n8n-postrgres_n8n_data:/data \
   -v "$PWD/backups":/backup \
-  alpine sh -c "rm -rf /data/* /data/.[!.]* 2>/dev/null; tar xzf /backup/n8n_data_backup.tar.gz -C /data"
+  alpine sh -c 'rm -rf /data/* /data/.[!.]* 2>/dev/null; tar xzf /backup/n8n_data_backup.tar.gz -C /data'
 
 # Start again
 docker compose up -d
