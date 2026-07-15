@@ -1,5 +1,6 @@
 # Data backups (store in Dropbox / Drive, not Git)
 *.sql
+!sql/*.sql
 *.tar.gz
 backups/
 n8n-backups/
