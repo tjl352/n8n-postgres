@@ -59,7 +59,7 @@ docker volume ls | grep n8n
 
 # Restore n8n settings volume
 docker run --rm \
-  -v n8n-postrgres_n8n_data:/data \
+  -v n8n-postgres_n8n_data:/data \
   -v "$PWD/backups":/backup \
   alpine sh -c 'rm -rf /data/* /data/.[!.]* 2>/dev/null; tar xzf /backup/n8n_data_backup.tar.gz -C /data'
 
@@ -153,7 +153,7 @@ docker compose exec -T postgres pg_dump -U n8n_user n8n_database > "$BACKUP_DIR/
 
 # n8n settings volume (encryption key, etc.)
 docker run --rm \
-  -v n8n-postrgres_n8n_data:/data \
+  -v n8n-postgres_n8n_data:/data \
   -v "$BACKUP_DIR":/backup \
   alpine tar czf /backup/n8n_data_backup.tar.gz -C /data .
 ```
@@ -175,8 +175,8 @@ docker volume ls | grep n8n
 
 On this project they are typically:
 
-- `n8n-postrgres_postgres_data`
-- `n8n-postrgres_n8n_data`
+- `n8n-postgres_postgres_data`
+- `n8n-postgres_n8n_data`
 
 **2. Upload manually**
 
