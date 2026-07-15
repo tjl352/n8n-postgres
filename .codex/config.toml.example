@@ -1,0 +1,6 @@
+# Copy into ~/.codex/config.toml (or merge this block), then fix the script path.
+# The launcher reads N8N_API_URL / N8N_API_KEY from this project's .env
+
+[mcp_servers.n8n-mcp]
+command = "bash"
+args = ["/ABS/PATH/TO/n8n-postgres/scripts/n8n-mcp.sh"]

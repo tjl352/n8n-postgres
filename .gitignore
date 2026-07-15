@@ -9,6 +9,10 @@ n8n-backups/
 .env.*
 !.env.example
 
+# Optional local MCP overrides (shared templates stay in git)
+.cursor/mcp.json.local
+.mcp.json.local
+
 # OS / editor
 .DS_Store
 Thumbs.db
